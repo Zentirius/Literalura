@@ -95,6 +95,9 @@ CREATE DATABASE literalura;
 -- Conectarse a la base de datos literalura
 \c literalura
 
+-- Crear el esquema público (generalmente ya existe por defecto)
+CREATE SCHEMA IF NOT EXISTS public;
+
 -- Crear la tabla autores
 CREATE TABLE public.autores (
     id SERIAL PRIMARY KEY,
@@ -102,8 +105,23 @@ CREATE TABLE public.autores (
     apellido VARCHAR(255) NOT NULL,
     fecha_nacimiento DATE,
     fecha_fallecimiento DATE,
-    nacionalidad VARCHAR(100) DEFAULT 'Sin información'
+    nacionalidad VARCHAR(100) DEFAULT 'Sin información',
+    anio_fallecimiento INTEGER,
+    anio_nacimiento INTEGER
 );
+
+-- Crear la secuencia para la tabla autores
+CREATE SEQUENCE public.autores_id_seq
+    AS INTEGER
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER SEQUENCE public.autores_id_seq OWNED BY public.autores.id;
+
+ALTER TABLE ONLY public.autores ALTER COLUMN id SET DEFAULT nextval('public.autores_id_seq'::regclass);
 
 -- Crear la tabla libros
 CREATE TABLE public.libros (
@@ -114,8 +132,26 @@ CREATE TABLE public.libros (
     genero VARCHAR(100),
     idioma VARCHAR(50) NOT NULL,
     numero_descargas INTEGER DEFAULT 0,
-    CONSTRAINT libros_autor_id_fkey FOREIGN KEY (autor_id) REFERENCES public.autores(id)
+    CONSTRAINT libros_anio_publicacion_check CHECK (anio_publicacion > 0)
 );
+
+-- Crear la secuencia para la tabla libros
+CREATE SEQUENCE public.libros_id_seq
+    AS INTEGER
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER SEQUENCE public.libros_id_seq OWNED BY public.libros.id;
+
+ALTER TABLE ONLY public.libros ALTER COLUMN id SET DEFAULT nextval('public.libros_id_seq'::regclass);
+
+-- Añadir la clave foránea (foreign key) para la tabla libros
+ALTER TABLE ONLY public.libros
+    ADD CONSTRAINT libros_autor_id_fkey FOREIGN KEY (autor_id) REFERENCES public.autores(id);
+
 ```
 
 ---
