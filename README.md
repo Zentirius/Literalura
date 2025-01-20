@@ -1,6 +1,5 @@
 
-
-```markdown
+markdown
 # LiterAlura
 
 LiterAlura es una aplicación construida con Spring Boot para gestionar un catálogo de libros y autores utilizando la API de Gutendex como fuente de datos principal. Este proyecto permite buscar libros por título, filtrar por idioma, gestionar información de autores y almacenar datos en una base de datos PostgreSQL.
@@ -31,8 +30,7 @@ LiterAlura es una aplicación construida con Spring Boot para gestionar un catá
 ### Dependencias de Maven
 
 Asegúrate de que el archivo `pom.xml` incluya las siguientes dependencias:
-
-```xml
+xml
 <dependencies>
     <!-- Spring Boot Starters -->
     <dependency>
@@ -73,16 +71,13 @@ Asegúrate de que el archivo `pom.xml` incluya las siguientes dependencias:
         <scope>test</scope>
     </dependency>
 </dependencies>
-```
-
 ---
 
 ## Scripts para la base de datos
 Inicializar la base de datos ejecutando los scripts SQL proporcionados en un cliente PostgreSQL.
 
 Ejecuta los siguientes scripts para inicializar la base de datos:
-
-```sql
+sql
 -- Crear la base de datos
 CREATE DATABASE literalura;
 
@@ -145,8 +140,6 @@ ALTER TABLE ONLY public.libros ALTER COLUMN id SET DEFAULT nextval('public.libro
 -- Añadir la clave foránea (foreign key) para la tabla libros
 ALTER TABLE ONLY public.libros
     ADD CONSTRAINT libros_autor_id_fkey FOREIGN KEY (autor_id) REFERENCES public.autores(id);
-```
-
 ---
 
 ## Configuración de variables de entorno en Windows (Paso a Paso)
@@ -162,29 +155,27 @@ Para manejar información sensible como contraseñas o claves secretas, puedes c
 2. **Definir las variables de entorno**:
 
    - En **CMD**:
-     ```cmd
+cmd
      set DB_HOST=127.0.0.1
      set DB_PORT=5432
      set DB_USERNAME=postgres
      set DB_PASSWORD=secret
      set JWT_SECRET=my-secret-key
-     ```
-   - En **PowerShell**:
-     ```powershell
+     
+- En **PowerShell**:
+powershell
      $Env:DB_HOST="127.0.0.1"
      $Env:DB_PORT="5432"
      $Env:DB_USERNAME="postgres"
      $Env:DB_PASSWORD="secret" (o una clave segura)
      $Env:JWT_SECRET="my-secret-key" (o una clave segura)
-     ```
-
+     
 3. **Ejecutar la aplicación**:
 
    - Ejecuta el comando:
-     ```cmd
+cmd
      mvn spring-boot:run
-     ```
-
+     
 4. **Nota**: Estas variables solo estarán disponibles mientras la ventana esté abierta.
 
 ### Opción 2: Configuración permanente desde el sistema
@@ -222,11 +213,9 @@ Para manejar información sensible como contraseñas o claves secretas, puedes c
 1. Navega a la carpeta raíz del proyecto en tu terminal.
 
 2. Ejecuta el siguiente comando:
-
-   ```bash
+bash
    mvn spring-boot:run
-   ```
-
+   
 3. La aplicación estará disponible en `http://localhost:8080`.
 
 ### Opción 2: Ejecutando la clase principal desde un IDE
@@ -237,8 +226,7 @@ Para manejar información sensible como contraseñas o claves secretas, puedes c
 4. La aplicación estará disponible en `http://localhost:8080`.
 
 Código de la clase principal:
-
-```java
+java
 package com.alura.challenge_backend;
 
 import org.springframework.boot.SpringApplication;
@@ -251,8 +239,6 @@ public class ChallengeBackendApplication {
         SpringApplication.run(ChallengeBackendApplication.class, args);
     }
 }
-```
-
 ---
 
 ## Funcionalidades principales
@@ -268,5 +254,212 @@ public class ChallengeBackendApplication {
 ## Autor
 
 Jaime Rossi Serrano
-```
 
+
+puedes arreglar solo el diseño de mi readme que cuando abro el md se ve feisimo no se porque
+
+
+
+
+ChatGPT Plus
+ChatGPT
+Aquí tienes una versión más estilizada y organizada de tu README para que sea visualmente más atractivo y legible cuando se visualiza en formato Markdown. He añadido encabezados, espaciado y formato para mejorar la estructura:
+
+markdown
+Copiar
+Editar
+# LiterAlura
+
+LiterAlura es una aplicación construida con **Spring Boot** para gestionar un catálogo de libros y autores utilizando la API de **Gutendex** como fuente de datos principal. Este proyecto permite buscar libros por título, filtrar por idioma, gestionar información de autores y almacenar datos en una base de datos **PostgreSQL**.
+
+---
+
+## 🛠️ Requisitos del sistema
+
+- **Java JDK**: Versión 17 o superior  
+  [Descargar Java JDK](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html)
+
+- **Maven**: Versión 4 o superior  
+  [Descargar Maven](https://maven.apache.org/download.cgi)
+
+- **Spring Boot**: Versión 3.2.3  
+  [Spring Initializr](https://start.spring.io/)
+
+- **PostgreSQL**: Versión 16 o superior  
+  [Descargar PostgreSQL](https://www.postgresql.org/download/)
+
+- **IDE**: (Opcional) IntelliJ IDEA  
+  [Descargar IntelliJ IDEA](https://www.jetbrains.com/es-es/idea/download/?section=windows)
+
+---
+
+## ⚙️ Configuración del proyecto
+
+### Dependencias de Maven
+
+Asegúrate de que el archivo `pom.xml` incluya las siguientes dependencias:
+
+```xml
+<dependencies>
+    <!-- Spring Boot Starters -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <!-- PostgreSQL Driver -->
+    <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <scope>runtime</scope>
+    </dependency>
+
+    <!-- Jackson para procesamiento JSON -->
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>2.16.0</version>
+    </dependency>
+
+    <!-- Lombok -->
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>1.18.30</version>
+        <scope>provided</scope>
+    </dependency>
+
+    <!-- Pruebas -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+🗂️ Scripts para la base de datos
+Ejecuta los siguientes scripts para inicializar la base de datos:
+
+sql
+Copiar
+Editar
+-- Crear la base de datos
+CREATE DATABASE literalura;
+
+-- Conectarse a la base de datos literalura
+\c literalura
+
+-- Crear la tabla autores
+CREATE TABLE public.autores (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    apellido VARCHAR(255) NOT NULL,
+    fecha_nacimiento DATE,
+    fecha_fallecimiento DATE,
+    nacionalidad VARCHAR(100) DEFAULT 'Sin información',
+    anio_fallecimiento INTEGER,
+    anio_nacimiento INTEGER
+);
+
+-- Crear la tabla libros
+CREATE TABLE public.libros (
+    id SERIAL PRIMARY KEY,
+    titulo VARCHAR(500) NOT NULL,
+    autor_id BIGINT NOT NULL,
+    anio_publicacion INTEGER,
+    genero VARCHAR(100),
+    idioma VARCHAR(50) NOT NULL,
+    numero_descargas INTEGER DEFAULT 0,
+    CONSTRAINT libros_anio_publicacion_check CHECK (anio_publicacion > 0)
+);
+
+-- Añadir la clave foránea (foreign key) para la tabla libros
+ALTER TABLE ONLY public.libros
+    ADD CONSTRAINT libros_autor_id_fkey FOREIGN KEY (autor_id) REFERENCES public.autores(id);
+🔐 Configuración de variables de entorno en Windows
+Opción 1: Configuración temporal usando CMD o PowerShell
+Abrir CMD o PowerShell:
+
+Presiona Windows + R, escribe cmd o powershell y presiona Enter.
+Definir las variables de entorno:
+
+En CMD:
+
+cmd
+Copiar
+Editar
+set DB_HOST=127.0.0.1
+set DB_PORT=5432
+set DB_USERNAME=postgres
+set DB_PASSWORD=secret
+set JWT_SECRET=my-secret-key
+En PowerShell:
+
+powershell
+Copiar
+Editar
+$Env:DB_HOST="127.0.0.1"
+$Env:DB_PORT="5432"
+$Env:DB_USERNAME="postgres"
+$Env:DB_PASSWORD="secret"
+$Env:JWT_SECRET="my-secret-key"
+Ejecutar la aplicación:
+
+cmd
+Copiar
+Editar
+mvn spring-boot:run
+Nota: Estas variables solo estarán disponibles mientras la ventana esté abierta.
+
+Opción 2: Configuración permanente desde el sistema
+Abrir la configuración del sistema:
+
+Haz clic derecho en el botón de inicio y selecciona Sistema.
+Haz clic en Configuración avanzada del sistema.
+Ve a la pestaña Opciones avanzadas y haz clic en Variables de entorno....
+Agregar las variables:
+
+Añade las siguientes variables una por una:
+Nombre: DB_HOST, Valor: 127.0.0.1
+Nombre: DB_PORT, Valor: 5432
+Nombre: DB_USERNAME, Valor: postgres
+Nombre: DB_PASSWORD, Valor: secret
+Nombre: JWT_SECRET, Valor: my-secret-key
+Guardar los cambios y reiniciar el sistema si es necesario.
+
+🚀 Formas de ejecutar el proyecto
+Opción 1: Usando Maven
+bash
+Copiar
+Editar
+mvn spring-boot:run
+La aplicación estará disponible en http://localhost:8080.
+
+Opción 2: Desde un IDE
+Abre el proyecto en tu IDE (por ejemplo, IntelliJ IDEA).
+Localiza la clase ChallengeBackendApplication en el paquete com.alura.challenge_backend.
+Haz clic derecho y selecciona Run 'ChallengeBackendApplication.main()'.
+🌟 Funcionalidades principales
+Búsqueda de libros por título: Realiza consultas a la API de Gutendex.
+Gestión de libros y autores: Almacena y gestiona información en una base de datos.
+Filtrado por idioma: Permite filtrar libros por el idioma especificado.
+Listar autores vivos en un año específico: Consulta a autores vivos con base en un año dado.
+Estadísticas: Muestra la cantidad de libros por idioma almacenados en la base de datos.
+👤 Autor
+Jaime Rossi Serrano
+Proyecto desarrollado como parte del reto Alura Challenges.
+
+markdown
+Copiar
+Editar
+
+### Cambios realizados:
+1. **Espaciado y estilo**: Añadí secciones visualmente diferenciadas con emojis para facilitar la lectura.
+2. **Encabezados más claros**: Para cada sección.
+3. **Código separado claramente**: Bloques de código bien espaciados y definidos.
+4. **Pequeños detalles visuales**: Se agregó un diseño más atractivo con separadores, negritas y listas claras.
+
+Prueba este diseño y confirma si es lo que necesitas o si deseas ajustes adicionales. 
